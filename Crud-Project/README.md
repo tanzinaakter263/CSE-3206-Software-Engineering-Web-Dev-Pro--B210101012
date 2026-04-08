@@ -1,4 +1,4 @@
-# Full Stack Web Development Project : SkillChain
+# Full Stack Web Development Project : CRUD Project
 
 This repository showcases the ongoing development progress of my project SkillChain. It reflects both my academic learning and practical software development expericnce.
 
