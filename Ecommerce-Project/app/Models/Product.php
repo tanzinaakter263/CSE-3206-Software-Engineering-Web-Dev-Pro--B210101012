@@ -28,4 +28,12 @@ class Product extends Model
         return "https://placehold.co/50x50?text=File+Not+Found";
     }
 }
+
+function product_images(){
+    return $this->hasMany(ProductImage::class);
+}
+
+function product_sizes(){
+    return $this->hasMany(ProductSize::class);
+}
 }

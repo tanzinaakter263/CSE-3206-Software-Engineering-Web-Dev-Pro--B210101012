@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TempImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image; // Version 2.7 এর জন্য এটিই সঠিক
+use Intervention\Image\Facades\Image; 
 
 class TempImageController extends Controller
 {

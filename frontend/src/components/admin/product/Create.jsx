@@ -18,10 +18,12 @@ const Create = ({ placeholder }) => {
   const [gallery, setGallery] = useState([])
   const [galleryImages, setGalleryImages] = useState([])
   const navigate = useNavigate();
+    const [sizes, setSizes] = useState([])
+     const [sizesChecked, setSizesChecked] = useState([])
 
   const config = useMemo(
     () => ({
-      readonly: false, // all options from https://xdsoft.net/jodit/docs/,
+      readonly: false, 
       placeholder: placeholder || ''
     }),
     [placeholder]
@@ -36,6 +38,26 @@ const Create = ({ placeholder }) => {
     setError,
     formState: { errors },
   } = useForm();
+
+  const fetchSizes = async () => {
+        
+            const res = await fetch(`${apiUrl}/sizes`, {
+              method: 'GET',
+              headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${adminToken()}`
+              }
+        
+            })
+              .then(res => res.json())
+              .then(result => {
+               // console.log(result);
+                setSizes(result.data)
+        
+              })
+        
+          }
   const saveProduct = async (data) => {
 
     const formData = { ...data, "description": content, "gallery": gallery }
@@ -71,45 +93,9 @@ const Create = ({ placeholder }) => {
       })
   }
 
-  /* const saveProduct = async (data) => {
- const formData = { ...data, "description": content, "gallery": gallery }
- setDisable(true);
-
- try {
-     const res = await fetch(`${apiUrl}/products`, {
-         method: 'POST',
-         headers: {
-             'Content-type': 'application/json',
-             'Accept': 'application/json',
-             'Authorization': `Bearer ${adminToken()}`
-         },
-         body: JSON.stringify(formData)
-     });
-
-     const result = await res.json();
-     setDisable(false);
-
-     if (result.status === 200) {
-         toast.success(result.message);
-         navigate('/admin/products');
-     } else {
-         // এই চেকটি অত্যন্ত জরুরি (যাতে আনডিফাইনড এরর না আসে)
-         if (result.errors) {
-             const formErrors = result.errors;
-             Object.keys(formErrors).forEach((field) => {
-                 setError(field, { message: formErrors[field][0] });
-             });
-         } else {
-             // যদি লারাভেল থেকে errors অবজেক্ট না আসে (যেমন ৫০০ এরর হলে)
-             toast.error(result.message || "Something went wrong on the server!");
-         }
-     }
- } catch (error) {
-     setDisable(false);
-     toast.error("Network error! Please check your connection.");
-     console.log(error);
- }
-}*/
+  
+ 
+         
 
   const fetchCategories = async () => {
 
@@ -191,18 +177,19 @@ const Create = ({ placeholder }) => {
   }
 
   const deleteImage = (id) => {
-    // ১. gallery স্টেট থেকে আইডিটি সরিয়ে ফেলুন (যা ডাটাবেসে যাবে)
+  
     setGallery(gallery.filter(imageId => imageId !== id));
 
-    // ২. galleryImages স্টেট থেকে ছবির অবজেক্টটি সরিয়ে ফেলুন (যা স্ক্রিনে দেখা যাচ্ছে)
+  
     setGalleryImages(galleryImages.filter(img => img.image_id !== id));
 
-    toast.info("ছবিটি লিস্ট থেকে বাদ দেওয়া হয়েছে।");
+    toast.info("Image Deleted");
   }
 
   useEffect(() => {
     fetchCategories();
     fetchBrands();
+    fetchSizes();
 
   }, [])
   return (
@@ -468,6 +455,46 @@ const Create = ({ placeholder }) => {
 
 
                   </div>
+                  <h3 className="py-3 border-bottom mb-3">Sizes</h3>
+                  <div className='mb-3'>
+                    
+
+
+                    {
+                      sizes && sizes.map(size=>{
+                        return (
+                          <div className="form-check-inline ps-2" key={`psize=${size.id}`}>
+                      <input 
+                      {
+                        ...register("sizes")
+                      }
+                      checked={sizesChecked.includes(size.id)}
+                      onChange={(e)=>{
+                        if(e.target.checked){
+                          setSizesChecked([...sizesChecked,size.id])
+
+                        } else{
+                          setSizesChecked(sizesChecked.filter(sid => size.id !=sid))
+
+
+                        }
+                      }}
+                      className="form-check-input" type="checkbox"  value={size.id} id={`size={size.id}`}/>
+                      <label className="form-check-label ps-2" htmlFor="{`size={size.id}`}">
+                        {size.name}
+                        </label>
+                        
+                    
+
+                    </div>
+
+                        )
+                      })
+                    }
+                    
+
+                  </div>
+
 
 
                   <h3 className="py-3 border-bottom mb-3">Gallery</h3>

@@ -5,11 +5,13 @@ import Sidebar from '../../common/Sidebar'
 import { adminToken, apiUrl } from '../../common/http'
 import Loader from '../../common/Loader'
 import Nostate from '../../common/Nostate'
+import { toast } from 'react-toastify'
 const Show = () => {
 
     const [products, setProducts] = useState([]);
     const [loader, setLoader] = useState(false);
     const fetchProducts = async () => {
+
         setLoader(true);
         const res = await fetch(`${apiUrl}/products`, {
             method: 'GET',
@@ -31,6 +33,30 @@ const Show = () => {
 
             })
     }
+    const deleteProduct = async (id) => {
+      if(confirm("Are you sure you want to delete?")){
+        const res = await fetch(`${apiUrl}/products/${id}`, {
+                method: 'DELETE',
+                headers: {
+                  //'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Authorization': `Bearer ${adminToken()}`
+                }
+          
+              });
+               const result = await res.json();
+               // .then(result => {
+                 if(result.status==200){
+                   const newProducts =products.filter(product => product.id !=id)
+                   setProducts(newProducts)
+                  toast.success(result.message)
+                 } else{
+                  toast.error(result.message)
+                 }
+          
+                }
+    
+      }
 
     useEffect(() => {
         fetchProducts();
@@ -82,7 +108,7 @@ const Show = () => {
                                             {
                                                 products.map(product => {
                                                     return (
-                                                        <tr>
+                                                        <tr key={product.id}>
                                                             <td>{product.id}</td>
 
                                                             <td>
