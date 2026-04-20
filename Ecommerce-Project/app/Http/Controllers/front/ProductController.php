@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ProductSize;
 use App\Models\Brand;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 
@@ -75,4 +76,21 @@ class ProductController extends Controller
             'data' => $brands
         ],200);
     }
+
+   public function getProduct($id){
+    $product = Product::with('product_images','product_sizes')->find($id);
+    if($product==null){
+     return response()->json([
+            'status' =>404,
+            'message' => 'Product Not Found'
+        ],404);
+    }
+        //$brands =Brand::orderBy('name','ASC')
+        //->where('status',1)
+        //->get();
+        return response()->json([
+            'status' =>200,
+            'data' => $product
+        ],200);
+    }  
 }
