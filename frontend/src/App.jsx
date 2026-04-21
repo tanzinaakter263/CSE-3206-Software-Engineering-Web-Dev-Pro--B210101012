@@ -7,6 +7,8 @@ import Cart from './components/Cart'
 import Checkout from './components/Checkout'
 import Login from './components/admin/Login'
 import Dashboard from './components/admin/Dashboard'
+import Register from './components/context/Register'
+
 import  { ToastContainer,toast} from 'react-toastify';
 import { AdminRequireAuth } from './components/admin/AdminRequireAuth'
 import {default as ShowCategories} from './components/admin/category/Show'
@@ -19,6 +21,11 @@ import {default as EditBrand} from './components/admin/brand/Edit'
 import {default as ShowProducts} from './components/admin/product/Show'
 import {default as CreateProduct} from './components/admin/product/Create'
 import {default as EditProduct} from './components/admin/product/Edit'
+import {default as UserLogin} from './components/context/Login'
+import Profile from './components/context/Profile'
+import { RequireAuth } from './components/common/RequireAuth'
+import Confirmation from './components/context/Confirmation'
+
 
 
 function App() {
@@ -31,8 +38,39 @@ function App() {
           <Route path='/shop' element={<Shop />} />
           <Route path='/product/:id' element={<Product/>} />
           <Route path='/cart' element={<Cart />} />
-          <Route path='/checkout' element={<Checkout />} />
-          <Route path='/admin/login' element={<Login />} />
+          {/*<Route path='/checkout' element={<Checkout />} />*/}
+
+          <Route path='/account/register' element={<Register />} />
+           <Route path='/account/login' element={<UserLogin />} />
+           <Route path='/admin/login' element={<Login />} />
+
+          
+            
+            <Route path='/account' element={
+           <RequireAuth>
+            <Profile />
+            <Dashboard />
+           </RequireAuth>
+            }/>
+
+
+            <Route path='/checkout' element={
+           <RequireAuth>
+            <Checkout />
+            <Dashboard />
+           </RequireAuth>
+            }/>
+
+
+            <Route path='/order/confirmation/:id' element={
+           <RequireAuth>
+            <Confirmation />
+            <Dashboard />
+           </RequireAuth>
+            }/>
+
+
+          
           <Route path='/admin/dashboard' element={
            <AdminRequireAuth>
             <Dashboard />
