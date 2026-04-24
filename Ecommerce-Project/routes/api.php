@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\SizeController;
 use App\Http\Controllers\admin\TempImageController;
 use App\Http\Controllers\front\AccountController;
 use App\Http\Controllers\front\OrderController;
+use App\Http\Controllers\admin\OrderController as AdminOrderController;
 use App\Http\Controllers\front\ProductController as FrontProductController;
 
 Route::post('/admin/login', [AuthController::class, 'authenticate']);
@@ -24,8 +25,15 @@ Route::post('register',[AccountController::class,'register']);
 Route::post('login',[AccountController::class,'authenticate']);
 
 
+Route::get('orders',[AdminOrderController::class,'index']);
+Route::get('orders/{id}',[AdminOrderController::class,'detail']);
+
+
+
 Route::group(['middleware' => ['auth:sanctum','checkUserRole']],function(){
 Route::post('save-order',[OrderController::class,'saveOrder']);
+Route::get('get-order-details/{id}',[AccountController::class,'getOrderDetails']);
+
 });
 
 
@@ -58,6 +66,11 @@ Route::post('save-product-image',[Productcontroller::class,'saveProductImage']);
 Route::post('change-product-default-image',[Productcontroller::class,'updateDefaultImage']);
 Route::post('/products/{id}', [Productcontroller::class, 'update']);
 Route::delete('/delete-product-image/{id}',[Productcontroller::class,'deleteProductImage']);
+
+
+
+//Route::get('orders',[AdminOrderController::class,'index']);
+
 
 });
 
