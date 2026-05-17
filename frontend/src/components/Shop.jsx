@@ -216,7 +216,7 @@ const Shop = () => {
                     <div className='price'>
                        <div className='price'>
 
-                                    ${product.price} $nbsp;
+                                    ${product.price} &nbsp;
                                     {
                                         product.compare_price &&  <span className='text-decoration-line-through'>${product.compare_price}</span >
                                     }
