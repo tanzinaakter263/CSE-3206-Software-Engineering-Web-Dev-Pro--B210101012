@@ -53,7 +53,7 @@ const OrderDetail = () => {
     }
 
     const updateOrder= async (data) =>{
-
+      setLoader(true);
         const res = await fetch(`${apiUrl}/update-order/${params.id}`, {
             method: 'POST',
             headers: {
@@ -79,6 +79,7 @@ const OrderDetail = () => {
                         payment_status: result.data.payment_status,
                     });
                     toast.success(result.message);
+                    fetchOrder();
                 } else {
                     console.log("Something went wrong")
                 }

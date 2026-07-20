@@ -28,6 +28,7 @@ const [orders,setOrders] = useState([]);
                       
                       if (result.status == 200) {
                           setOrders(result.data);
+                          
                       } else {
                           console.log("Something went wrong")
                       }

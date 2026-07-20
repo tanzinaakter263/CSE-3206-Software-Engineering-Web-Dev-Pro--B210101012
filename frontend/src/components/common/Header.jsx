@@ -30,7 +30,7 @@ const Header = () => {
 
     useEffect(()=>{
       fetchCategories();
-    })
+    },[])
   return (
 
    <header className='shadow'>

@@ -94,7 +94,7 @@ const ShowOrders = () => {
                                             <td>{order.created_at}</td>
                                             <td>
                                                 {
-                                                order.payment_status==1?
+                                                order.payment_status=='paid'?
                                                 <span className='badge bg-success'>Paid</span> :
                                                  <span className='badge bg-danger'>Not Paid</span> 
                                                 }
