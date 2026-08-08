@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { CartContext } from './context/Cart';
 import { useForm } from 'react-hook-form';
 import { apiUrl,userToken } from './common/http';
+import { toast } from 'react-toastify';
 const Checkout = () => {
     const [paymentMethod, setPaymentMethod] = useState('cod');
     const {cartData,grandTotal,subTotal,shipping} = useContext(CartContext);
@@ -50,7 +51,7 @@ const Checkout = () => {
       });
 
       const processOrder =(data) =>{
-      console.log(data)
+      //console.log(data)
       if(paymentMethod=='cod'){
         saveOrder(data,'not paid')
       }

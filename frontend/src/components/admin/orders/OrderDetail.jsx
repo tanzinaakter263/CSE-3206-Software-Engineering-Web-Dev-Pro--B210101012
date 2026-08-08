@@ -37,7 +37,7 @@ const OrderDetail = () => {
             .then(res => res.json())
             .then(result => {
                 setLoader(false);
-            
+             // console.log(result);
                 if (result.status == 200) {
                     setOrder(result.data);
                     setItems(result.data.items);

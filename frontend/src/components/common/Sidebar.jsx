@@ -26,10 +26,10 @@ const Sidebar = () => {
                         <Link to="/admin/orders">Orders</Link>
                     </li>
                     <li>
-                        <a href="">Users</a>
+                        <Link to="/admin/shipping">Shipping</Link>
                     </li>
                     <li>
-                        <a href="">Shipping</a>
+                        
                     </li>
                     <li>
                         <a href="">Change Password</a>

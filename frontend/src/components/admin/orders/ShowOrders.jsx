@@ -27,7 +27,7 @@ const ShowOrders = () => {
             .then(res => res.json())
                 .then(result => {
                     setLoader(false);
-                    //console.log(result);
+                   // console.log(result);
                     if (result.status == 200) {
                         setOrders(result.data);
                     } else {

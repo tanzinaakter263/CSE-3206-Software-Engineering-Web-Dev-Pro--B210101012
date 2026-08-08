@@ -31,6 +31,7 @@ import OrderDetail from './components/admin/orders/OrderDetail'
 
 import MyOrders from './components/front/MyOrders'
 import {default as UserOrderDetail} from './components/front/OrderDetail'
+import Shipping from './components/admin/shipping/Shipping'
 
 
 function App() {
@@ -186,6 +187,15 @@ function App() {
            <Route path='/admin/orders/:id' element={
            <AdminRequireAuth>
             <OrderDetail/>
+           </AdminRequireAuth>
+
+
+          } />
+
+
+           <Route path='/admin/shipping' element={
+           <AdminRequireAuth>
+            <Shipping/>
            </AdminRequireAuth>
 
 

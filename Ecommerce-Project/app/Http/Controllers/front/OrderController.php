@@ -7,14 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
 
-
 use function Ramsey\Uuid\v1;
 
 class OrderController extends Controller
 {
     public function saveOrder(Request $request){
+        $cart = is_string($request->cart) ? json_decode($request->cart, true) : $request->cart;
+    if (!empty($cart) && is_array($cart)) {
+   // if(!empty($request->cart)){
 
-    if(!empty($request->cart)){
         $order =new Order();
         $order->name= $request->name;
          $order->email= $request->email;
@@ -30,9 +31,12 @@ class OrderController extends Controller
                 $order->payment_status= $request->payment_status;
                  $order->status= $request->status;
                   $order->user_id= $request->user()->id;
+                  
                    $order->save();
 
-                   foreach($request->cart as $item){
+                    foreach($cart as $item){
+
+                  // foreach($request->cart as $item){
                     $orderItem =new OrderItem();
                      $orderItem->order_id = $order->id;
                     $orderItem->price = $item['qty'] * $item['price'];
@@ -43,6 +47,8 @@ class OrderController extends Controller
                      $orderItem->name = $item['title'];
                     $orderItem->save();
                  }
+
+               
                  return response()->json([
                         'status' =>200,
                         'id' =>$order->id,
