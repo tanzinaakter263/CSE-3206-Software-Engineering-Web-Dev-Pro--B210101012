@@ -152,7 +152,7 @@ class AccountController extends Controller
     }
 
     public function getAccountDetails(Request $request){
-        $user = User::find($request->user()->id);
+        $user = User::find($request->user()?->id);
         
        if($user == null){
        

@@ -31,7 +31,9 @@ Route::post('login',[AccountController::class,'authenticate']);
 Route::get('orders',[AdminOrderController::class,'index']);
 Route::get('orders/{id}',[AdminOrderController::class,'detail']);
 Route::post('update-order/{id}',[AdminOrderController::class,'updateOrder']);
-Route::get('get-profile-details',[AccountController::class,'getAccountDetails']);
+
+
+
 
 
 Route::get('get-shipping',[ShippingController::class,'getShipping']);
@@ -41,11 +43,12 @@ Route::post('save-shipping',[ShippingController::class,'updateShipping']);
 Route::get('get-shipping-front',[FrontShippingController::class,'getShipping']);
 
 Route::group(['middleware' => ['auth:sanctum','checkUserRole']],function(){
+  Route::post('create-payment-intent',[OrderController::class,'createPaymentIntent']);
 Route::post('save-order',[OrderController::class,'saveOrder']);
 Route::get('get-order-details/{id}',[AccountController::class,'getOrderDetails']);
 Route::get('get-orders',[AccountController::class,'getOrders']);
 Route::post('update-profile',[AccountController::class,'updateProfile']);
-
+Route::get('get-profile-details',[AccountController::class,'getAccountDetails']);
 
 
 

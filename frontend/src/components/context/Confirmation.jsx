@@ -83,7 +83,10 @@ const Confirmation = () => {
                     }
                     {/*<span className='badge bg-warning'>Pending</span>*/}
                     </p>
-                    <p><strong>Payment Method:</strong>COD</p>
+                    <p><strong>Payment Method:</strong>{
+                      order.payment_method == 'stripe' ? <span className='badge bg-success'>Stripe</span> : <span className='badge bg-warning'>COD</span>
+                    }
+                    </p>
                       </div>
                       <div className='col-6'>
                      <p><strong>Customer:</strong>{order.name}</p>
